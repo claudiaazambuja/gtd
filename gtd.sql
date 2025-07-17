@@ -1,5 +1,3 @@
--- Criação das tabelas para um sistema de produtividade baseado em GTD
-
 CREATE TABLE Users (
     IdUser SERIAL PRIMARY KEY,
     Username VARCHAR(50) NOT NULL,
