@@ -5,22 +5,22 @@ const prisma = new PrismaClient();
 
 async function main() {
   for (let i = 0; i < 10; i++) {
-    const user = await prisma.user.create({
+  const user = await prisma.User.create({
       data: {
-        Username: faker.internet.userName(),
+        Username: faker.internet.username(),
         Email: faker.internet.email(),
         PasswordHash: faker.internet.password(),
       },
     });
 
-    await prisma.inbox.create({
+  await prisma.Inbox.create({
       data: {
         Content: faker.lorem.sentence(),
         IdUser: user.IdUser,
       },
     });
 
-    const note = await prisma.note.create({
+  const note = await prisma.Note.create({
       data: {
         Content: faker.lorem.paragraph(),
         ReviewDate: faker.date.future(),
@@ -29,14 +29,14 @@ async function main() {
       },
     });
 
-    const project = await prisma.project.create({
+  const project = await prisma.Project.create({
       data: {
         Name: faker.commerce.productName(),
         Goal: faker.lorem.sentence()
       },
     });
 
-    await prisma.task.create({
+  await prisma.Task.create({
       data: {
         Title: faker.lorem.words(3),
         Description: faker.lorem.sentences(2),
