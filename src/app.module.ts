@@ -2,8 +2,7 @@ import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { ConfigModule } from '@nestjs/config';
-import { I18nModule } from 'nestjs-i18n';
-import { I18nJsonLoader } from '@nestjs-i18n/json-loader';
+import { I18nJsonLoader, I18nModule } from 'nestjs-i18n';
 import * as path from 'path';
 
 
