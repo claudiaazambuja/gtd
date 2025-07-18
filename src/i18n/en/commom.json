@@ -1,5 +1,27 @@
 {
   "auth": {
-    "email_already_registered": "Email already registered."
+    "email_already_registered": "Email is already registered.",
+    "user_not_found": "User not found.",
+    "invalid_credentials": "Invalid email or password.",
+    "password_too_weak": "The provided password is too weak.",
+    "unauthorized": "Unauthorized access."
+  },
+  "note": {
+    "not_found": "Note not found.",
+    "missing_content": "Note content is required."
+  },
+  "project": {
+    "not_found": "Project not found.",
+    "name_required": "Project name is required.",
+    "goal_too_long": "Project goal is too long."
+  },
+  "task": {
+    "not_found": "Task not found.",
+    "title_required": "Task title is required.",
+    "invalid_status": "Invalid task status."
+  },
+  "inbox": {
+    "item_not_found": "Inbox item not found.",
+    "content_required": "Inbox item content is required."
   }
 }

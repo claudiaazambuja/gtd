@@ -1,5 +1,27 @@
 {
   "auth": {
-    "email_already_registered": "Este e-mail já está registrado."
+    "email_already_registered": "E-mail já está registrado.",
+    "user_not_found": "Usuário não encontrado.",
+    "invalid_credentials": "E-mail ou senha inválidos.",
+    "password_too_weak": "A senha fornecida é muito fraca.",
+    "unauthorized": "Acesso não autorizado."
+  },
+  "note": {
+    "not_found": "Nota não encontrada.",
+    "missing_content": "O conteúdo da nota é obrigatório."
+  },
+  "project": {
+    "not_found": "Projeto não encontrado.",
+    "name_required": "Nome do projeto é obrigatório.",
+    "goal_too_long": "Objetivo do projeto excede o limite."
+  },
+  "task": {
+    "not_found": "Tarefa não encontrada.",
+    "title_required": "O título da tarefa é obrigatório.",
+    "invalid_status": "Status da tarefa inválido."
+  },
+  "inbox": {
+    "item_not_found": "Item da caixa de entrada não encontrado.",
+    "content_required": "O conteúdo do item é obrigatório."
   }
 }
