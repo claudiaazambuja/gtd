@@ -20,9 +20,23 @@ export class UsersService {
   }
 
   async updatePassword(id: number, password: string) {
+    if (!id) {
+      throw new Error('IdUser is required to update password');
+    }
+    
     return this.prisma.user.update({
       where: { IdUser: id },
       data: { PasswordHash: password },
     });
+  }
+
+  async findAll() {
+    return this.prisma.user.findMany();
+  }
+
+  async deleteUser(id: number) {
+    return this.prisma.user.delete({
+    where: { IdUser: id },
+  });
   }
 }
