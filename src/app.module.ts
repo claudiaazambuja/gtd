@@ -7,6 +7,7 @@ import * as path from 'path';
 import { AuthModule } from './auth/auth.module';
 import { HealthModule } from './health/health.module';
 import { UsersModule } from '@modules/users/users.module';
+import { CacheModule } from '@nestjs/cache-manager';
 
 
 
@@ -15,6 +16,7 @@ import { UsersModule } from '@modules/users/users.module';
     ConfigModule.forRoot({
       isGlobal: true, 
     }),
+    CacheModule.register({ store: 'memory', ttl: 3600, max: 100 }),
     I18nModule.forRoot({
       fallbackLanguage: 'pt',
       loader: I18nJsonLoader,
