@@ -1,20 +1,17 @@
-version: '3.9'
-
 services:
   postgres:
     image: postgres:15
     container_name: gtd_postgres
     restart: always
     environment:
-      POSTGRES_USER: gtd_user
-      POSTGRES_PASSWORD: gtd_pass
-      POSTGRES_DB: gtd_db
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: postgres
     ports:
       - "5432:5432"
-    volumes:
-      - postgres_data:/var/lib/postgresql/data
     networks:
       - gtd_network
+
 
   pgadmin:
     image: dpage/pgadmin4
@@ -38,34 +35,13 @@ services:
       RABBITMQ_DEFAULT_USER: guest
       RABBITMQ_DEFAULT_PASS: guest
     ports:
-      - "5672:5672"   # conexão com apps
-      - "15672:15672" # painel web
-    networks:
-      - gtd_network
-
-  backend:
-    build: ./backend
-    container_name: gtd_backend
-    restart: always
-    environment:
-      DB_HOST: postgres
-      DB_USER: gtd_user
-      DB_PASS: gtd_pass
-      DB_NAME: gtd_db
-      RABBITMQ_HOST: rabbitmq
-      RABBITMQ_USER: guest
-      RABBITMQ_PASS: guest
-    ports:
-      - "3000:3000"
-    depends_on:
-      - postgres
-      - rabbitmq
+      - "5672:5672"
+      - "15672:15672"
     networks:
       - gtd_network
 
 volumes:
-  postgres_data:
-   - .:/usr/src/app
+  pgdata: {}
 
 networks:
   gtd_network:
