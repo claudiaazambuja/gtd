@@ -6,22 +6,23 @@ export class UsersService {
   constructor(private prisma: PrismaService) {}
 
   async findByEmail(email: string) {
-    return this.prisma.user.findUnique({ where: { email } });
+    return this.prisma.user.findUnique({ where: { Email : email } });
   }
 
-  async createUser(email: string, password: string) {
+   async createUser(email: string, password: string) {
     return this.prisma.user.create({
       data: {
-        email,
-        password,
+        Email: email,
+        PasswordHash: password,
+        Username: email.split('@')[0], 
       },
     });
   }
 
   async updatePassword(id: number, password: string) {
     return this.prisma.user.update({
-      where: { id },
-      data: { password },
+      where: { IdUser: id },
+      data: { PasswordHash: password },
     });
   }
 }
