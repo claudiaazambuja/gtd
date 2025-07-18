@@ -22,7 +22,7 @@ export class AuthService {
   }
 
   async login(user: any) {
-    let payload = { username: user.email, sub: user.id };
+    let payload = { username: user.Username, sub: user.IdUser, email: user.Email };
     return {
       access_token: this.jwtService.sign(payload),
     };
@@ -36,8 +36,9 @@ export class AuthService {
     return this.usersService.createUser(email, hash);
   }
 
-  async changePassword(userId: number, newPassword: string) {
-    let hash = await bcrypt.hash(newPassword, 10);
-    return this.usersService.updatePassword(userId, hash);
+ async changePassword(id: number, password: string) {
+    if (!id) throw new Error('IdUser is required to update password');
+
+    return this.usersService.updatePassword(id, await bcrypt.hash(password, 10));
   }
 }

@@ -4,6 +4,8 @@ import { AppService } from './app.service';
 import { ConfigModule } from '@nestjs/config';
 import { HeaderResolver, I18nJsonLoader, I18nModule, QueryResolver } from 'nestjs-i18n';
 import * as path from 'path';
+import { AuthModule } from './auth/auth.module';
+import { HealthModule } from './health/health.module';
 
 
 
@@ -24,6 +26,8 @@ import * as path from 'path';
       new HeaderResolver(['x-custom-lang']),
   ],
     }),
+   AuthModule,
+   HealthModule
   ],
   controllers: [AppController],
   providers: [AppService],

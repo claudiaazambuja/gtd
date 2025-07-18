@@ -1,19 +1,26 @@
-import { Controller, Post, Body, UseGuards, Request, Patch } from '@nestjs/common';
+import { Controller, Post, Body, UseGuards, Request, Patch, UnauthorizedException } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { LocalAuthGuard } from './local-auth.guard';
 import { RegisterDto } from './dto/register.dto';
 import { ChangePasswordDto } from './dto/change-password.dto';
 import { JwtAuthGuard } from './jwt-auth.guard';
+import { I18nService } from 'nestjs-i18n';
 
 
 @Controller('auth')
 export class AuthController {
-  constructor(private authService: AuthService) {}
+  constructor(private authService: AuthService,  private readonly i18n: I18nService) {}
+  
+  @Post('login')
+    async login(@Body() body: { email: string; password: string }) {
+      let user = await this.authService.validateUser(body.email, body.password);
+      if (!user) {
+        throw new UnauthorizedException({
+          message: await (this.i18n.t('auth.invalid_credentials') as Promise<string>),
+        });
 
-    @UseGuards(LocalAuthGuard)
-    @Post('login')
-    async login(@Request() req) {
-        return this.authService.login(req.user);
+      }
+      return this.authService.login(user);
     }
 
     @Post('register')
