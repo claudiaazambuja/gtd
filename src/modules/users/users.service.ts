@@ -2,13 +2,14 @@ import { Inject, Injectable } from '@nestjs/common';
 import { PrismaService } from 'prisma/prisma.service';
 import { Cache } from 'cache-manager';
 import { CACHE_MANAGER } from '@nestjs/cache-manager';
+import { User } from './user.interface';
 
 @Injectable()
 export class UsersService {
   constructor(private prisma: PrismaService,  @Inject(CACHE_MANAGER) private cache: Cache,) {}
 
-  async findByEmail(email: string) {
-    let cachedUser = await this.cache.get(`user:${email}`);
+  async findByEmail(email: string): Promise<User> {
+    let cachedUser = await this.cache.get<User>(`user:${email}`);
 
     if (cachedUser) {
       return cachedUser; 
