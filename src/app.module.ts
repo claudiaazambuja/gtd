@@ -6,6 +6,7 @@ import { HeaderResolver, I18nJsonLoader, I18nModule, QueryResolver } from 'nestj
 import * as path from 'path';
 import { AuthModule } from './auth/auth.module';
 import { HealthModule } from './health/health.module';
+import { UsersModule } from '@modules/users/users.module';
 
 
 
@@ -27,7 +28,8 @@ import { HealthModule } from './health/health.module';
   ],
     }),
    AuthModule,
-   HealthModule
+   HealthModule,
+   UsersModule
   ],
   controllers: [AppController],
   providers: [AppService],

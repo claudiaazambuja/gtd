@@ -1,6 +1,5 @@
 import { Controller, Post, Body, UseGuards, Request, Patch, UnauthorizedException } from '@nestjs/common';
 import { AuthService } from './auth.service';
-import { LocalAuthGuard } from './local-auth.guard';
 import { RegisterDto } from './dto/register.dto';
 import { ChangePasswordDto } from './dto/change-password.dto';
 import { JwtAuthGuard } from './jwt-auth.guard';
@@ -31,6 +30,7 @@ export class AuthController {
     @UseGuards(JwtAuthGuard)
     @Patch('change-password') 
     async changePassword(@Request() req, @Body() body: ChangePasswordDto  ) {
+    if (!req.user.userId) throw new Error('IdUser is required to update password');
     return this.authService.changePassword(req.user.userId, body.newPassword);
   }
 }
