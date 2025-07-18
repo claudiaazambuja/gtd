@@ -1,8 +1,9 @@
 import { Injectable, UnauthorizedException, BadRequestException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import * as bcrypt from 'bcrypt';
-import { I18nService } from 'nestjs-i18n';
+import { I18nContext, I18nService } from 'nestjs-i18n';
 import { UsersService } from '@modules/users/users.service';
+import { User } from '@src/modules/users/user.interface';
 
 @Injectable()
 export class AuthService {
@@ -13,7 +14,7 @@ export class AuthService {
   ) {}
 
   async validateUser(email: string, password: string): Promise<any> {
-    let user = await this.usersService.findByEmail(email);
+    let user: User = await this.usersService.findByEmail(email);
     if (user && await bcrypt.compare(password, user.PasswordHash)){
       let { PasswordHash, ...result } = user;
       return result;
@@ -28,9 +29,15 @@ export class AuthService {
     };
   }
 
-  async register(email: string, password: string) {
+  async register(email: string, password: string, i18n: I18nContext) {
+    console.log("Lang", i18n.lang);
     let existing = await this.usersService.findByEmail(email);
-    if (existing) throw new BadRequestException(this.i18n.t('auth.email_already_registered'))
+
+    if (existing) {
+    const msg = await i18n.t('auth.email_already_registered');
+    console.log('TRADUÇÃO:', msg);
+    throw new BadRequestException(msg);
+  }
 
     let hash = await bcrypt.hash(password, 10);
     return this.usersService.createUser(email, hash);

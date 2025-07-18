@@ -3,7 +3,7 @@ import { AuthService } from './auth.service';
 import { RegisterDto } from './dto/register.dto';
 import { ChangePasswordDto } from './dto/change-password.dto';
 import { JwtAuthGuard } from './jwt-auth.guard';
-import { I18nService } from 'nestjs-i18n';
+import { I18n, I18nService, I18nContext } from 'nestjs-i18n';
 
 
 @Controller('auth')
@@ -23,8 +23,9 @@ export class AuthController {
     }
 
     @Post('register')
-    async register(@Body() body: RegisterDto) {
-    return this.authService.register(body.email, body.password);
+    async register(@I18n() i18n: I18nContext,
+    @Body() body: RegisterDto) {
+    return this.authService.register(body.email, body.password, i18n);
     }
 
     @UseGuards(JwtAuthGuard)
