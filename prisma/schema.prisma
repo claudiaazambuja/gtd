@@ -1,0 +1,57 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  IdUser      Int     @id @default(autoincrement())
+  Username    String  @db.VarChar(50)
+  Email       String  @unique @db.VarChar(100)
+  PasswordHash String
+  Notes       Note[]
+  InboxItems  Inbox[]
+}
+
+model Project {
+  IdProject Int      @id @default(autoincrement())
+  Name      String   @db.VarChar(100)
+  Goal      String?
+  CreatedAt DateTime @default(now())
+  Tasks     Task[]
+}
+
+model Note {
+  IdNote     Int     @id @default(autoincrement())
+  Content    String
+  ReviewDate DateTime?
+  Tags       String?
+  IdUser     Int
+  User       User    @relation(fields: [IdUser], references: [IdUser])
+  Tasks      Task[]
+}
+
+model Task {
+  IdTask     Int      @id @default(autoincrement())
+  Title      String   @db.VarChar(100)
+  Description String?
+  DueDate    DateTime?
+  Status     String   @default("pending")
+  Context    String?
+  IdProject  Int?
+  IdNote     Int?
+
+  Project    Project? @relation(fields: [IdProject], references: [IdProject])
+  Note       Note?    @relation(fields: [IdNote], references: [IdNote])
+}
+
+model Inbox {
+  IdInboxItem Int      @id @default(autoincrement())
+  Content     String
+  CreatedAt   DateTime @default(now())
+  IdUser      Int
+  User        User     @relation(fields: [IdUser], references: [IdUser])
+}
